@@ -15,8 +15,10 @@ public class UserService {
         userRepository.save(user) ;
     }
 
-    public void updateUser(String username, User user){
+    public void updateUsername(String username, String newName){
         User cur = userRepository.findByUsername(username) ;
-        cur.setUsername(user.getUsername()) ;
+        cur.setUsername(newName) ;
     }
+
+
 }
