@@ -37,8 +37,8 @@ public class UserService {
         userRepository.delete(cur);
     }
 
-    public List<Book> allBooks(){
-        return bookRepository.findAll() ;
+    public List<User> allUsers(){
+        return userRepository.findAll() ;
     }
 
 

@@ -2,6 +2,7 @@ package com.example.lms.Controller;
 
 import com.example.lms.Entity.Book;
 import com.example.lms.Repository.UserRepository;
+import com.example.lms.Service.BookService;
 import com.example.lms.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -14,6 +15,7 @@ public class UserController {
 
     @Autowired private UserRepository userRepository ;
     @Autowired private UserService userService ;
+    @Autowired private BookService bookService ;
 
     public void updateUsername(@RequestBody String username, @RequestBody String newName){
         userService.updateUsername(username,newName); ;
@@ -28,7 +30,7 @@ public class UserController {
     }
 
     public List<Book> viewAllBooks(){
-        return userService.allBooks() ;
+        return bookService.allBooks() ;
     }
 
 }
