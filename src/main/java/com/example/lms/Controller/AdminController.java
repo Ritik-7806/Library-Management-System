@@ -7,12 +7,13 @@ import com.example.lms.Repository.UserRepository;
 import com.example.lms.Service.BookService;
 import com.example.lms.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
+@RequestMapping("admin")
 public class AdminController {
 
     @Autowired
@@ -24,28 +25,38 @@ public class AdminController {
     @Autowired
     UserService userService ;
 
-    public void introduce(@RequestBody Book book){
+    @PostMapping("introduceBook")
+    public ResponseEntity<String> introduce(@RequestBody Book book){
         bookRepository.save(book) ;
+        return ResponseEntity.ok("New Book has been introduced in the library") ;
     }
 
-    public void updateBook(@RequestBody String name, @RequestBody Book book){
+    @PostMapping("updateBook")
+    public ResponseEntity<String> updateBook(@RequestBody String name, @RequestBody Book book){
         bookService.update(name,book) ;
+        return ResponseEntity.ok("book has been updated") ;
     }
 
-    public void deleteBook(@RequestBody long id){
+    @DeleteMapping("deleteBook")
+    public ResponseEntity<String> deleteBook(@RequestBody long id){
         bookRepository.deleteById(id);
+        return ResponseEntity.ok("book is deleted successfully") ;
     }
 
-    public void deleteUser(@RequestBody long id){
+    @DeleteMapping("deleteUser")
+    public ResponseEntity<String> deleteUser(@RequestBody long id){
         userRepository.deleteById(id);
+        return ResponseEntity.ok("User is deleted successfully") ;
     }
 
-    public List<Book> viewAllBooks(){
-        return bookService.allBooks() ;
+    @GetMapping("allBooks")
+    public ResponseEntity<List<Book>> viewAllBooks(){
+        return ResponseEntity.ok(bookService.allBooks()) ;
     }
 
-    public List<User> allUsers(){
-        return userService.allUsers() ;
+    @GetMapping("allUsers")
+    public ResponseEntity<List<User>> allUsers(){
+        return ResponseEntity.ok(userService.allUsers()) ;
     }
 
 }

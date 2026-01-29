@@ -12,7 +12,7 @@ public class PublicController {
 
     @Autowired private UserService userService ;
 
-    @PostMapping("signUp")
+    @PostMapping("signup")
     public ResponseEntity<String> signUp(@RequestBody User user){
         userService.saveNewUser(user) ;
         return ResponseEntity.status(HttpStatus.CREATED).body("User Registered Successfully") ;

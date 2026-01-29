@@ -25,6 +25,7 @@ public class UserService {
     public void updateUsername(String username, String newName){
         User cur = userRepository.findByUsername(username) ;
         cur.setUsername(newName) ;
+        userRepository.save(cur) ;
     }
 
     public void updatePassword(String username, String newPassword){
