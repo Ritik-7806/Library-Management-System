@@ -25,36 +25,36 @@ public class AdminController {
     @Autowired
     UserService userService ;
 
-    @PostMapping("introduceBook")
+    @PostMapping("introduce-book")
     public ResponseEntity<String> introduce(@RequestBody Book book){
         bookRepository.save(book) ;
         return ResponseEntity.ok("New Book has been introduced in the library") ;
     }
 
-    @PostMapping("updateBook")
+    @PostMapping("update-book")
     public ResponseEntity<String> updateBook(@RequestBody String name, @RequestBody Book book){
         bookService.update(name,book) ;
         return ResponseEntity.ok("book has been updated") ;
     }
 
-    @DeleteMapping("deleteBook")
+    @DeleteMapping("delete-book")
     public ResponseEntity<String> deleteBook(@RequestBody long id){
         bookRepository.deleteById(id);
         return ResponseEntity.ok("book is deleted successfully") ;
     }
 
-    @DeleteMapping("deleteUser")
+    @DeleteMapping("delete-user")
     public ResponseEntity<String> deleteUser(@RequestBody long id){
         userRepository.deleteById(id);
         return ResponseEntity.ok("User is deleted successfully") ;
     }
 
-    @GetMapping("allBooks")
+    @GetMapping("all-books")
     public ResponseEntity<List<Book>> viewAllBooks(){
         return ResponseEntity.ok(bookService.allBooks()) ;
     }
 
-    @GetMapping("allUsers")
+    @GetMapping("all-users")
     public ResponseEntity<List<User>> allUsers(){
         return ResponseEntity.ok(userService.allUsers()) ;
     }

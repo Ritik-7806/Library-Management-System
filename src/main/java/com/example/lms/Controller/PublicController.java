@@ -1,5 +1,6 @@
 package com.example.lms.Controller;
 
+import com.example.lms.DTO.LoginRequest;
 import com.example.lms.Entity.User;
 import com.example.lms.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,12 @@ public class PublicController {
     public ResponseEntity<String> signUp(@RequestBody User user){
         userService.saveNewUser(user) ;
         return ResponseEntity.status(HttpStatus.CREATED).body("User Registered Successfully") ;
+    }
+
+    @PostMapping("login")
+    public ResponseEntity<String> login(@RequestBody LoginRequest loginRequest){
+        userService.login(loginRequest) ;
+        return ResponseEntity.status(HttpStatus.CREATED).body("User login Successfully") ;
     }
 
     @GetMapping("logout")
