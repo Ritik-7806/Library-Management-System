@@ -30,7 +30,7 @@ public class UserController {
     @DeleteMapping("delete-me")
     public ResponseEntity<String> deleteUser(@RequestBody String username){
         userService.deleteUser(username) ;
-        return ResponseEntity.ok("you have been deleted successfully") ;
+        return ResponseEntity.ok("User have been deleted successfully") ;
     }
 
     @GetMapping("view-all-books")
