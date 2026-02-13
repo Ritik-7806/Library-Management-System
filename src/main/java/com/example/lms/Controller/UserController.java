@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@RequestMapping("user")
 public class UserController {
 
     @Autowired private UserRepository userRepository ;
@@ -21,13 +22,13 @@ public class UserController {
     //@Autowired private UpdateUser updateUser ;
 
 
-    @PostMapping("update-user")
+    @PostMapping("update")
     public ResponseEntity<String> updateUser(@RequestBody UpdateUser updateUser){
         userService.updateUser(updateUser) ;
         return ResponseEntity.status(HttpStatus.ACCEPTED).body("User updated successfully") ;
     }
 
-    @DeleteMapping("delete-me")
+    @DeleteMapping("delete")
     public ResponseEntity<String> deleteUser(@RequestBody String username){
         userService.deleteUser(username) ;
         return ResponseEntity.ok("User have been deleted successfully") ;

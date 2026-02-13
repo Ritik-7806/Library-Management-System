@@ -7,6 +7,7 @@ import com.example.lms.Repository.UserRepository;
 import com.example.lms.Service.BookService;
 import com.example.lms.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,6 +25,12 @@ public class AdminController {
     UserRepository userRepository ;
     @Autowired
     UserService userService ;
+
+    @PostMapping("new-admin")
+    public ResponseEntity<String> saveNewAdmin(@RequestBody User user){
+        userService.saveNewAdmin(user) ;
+        return ResponseEntity.status(HttpStatus.CREATED).body("Admin Registered Successfully") ;
+    }
 
     @PostMapping("introduce-book")
     public ResponseEntity<String> introduce(@RequestBody Book book){

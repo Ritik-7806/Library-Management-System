@@ -16,16 +16,31 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
-        http
+        return http.authorizeHttpRequests(request -> request
+                        .requestMatchers("/public/**").permitAll()
+                        //    .requestMatchers("/swagger-ui.html", "/v3/api-docs/**", "/swagger-ui/**").permitAll() // Allow access to Swagger UI and API docs
+                        .requestMatchers("/admin/**").hasRole("ADMIN")
+                        .requestMatchers("/user/**").authenticated()
+
+                        .anyRequest().permitAll())
+                .httpBasic(Customizer.withDefaults())
+                .csrf(AbstractHttpConfigurer::disable)
+                .build();
+
+        /*http
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/public/**").permitAll()
                         .requestMatchers("/user/**").authenticated()
                         .requestMatchers("/admin/**").hasRole("ADMIN")
                         .anyRequest().authenticated()
+                        .httpBasic(Customizer.withDefaults())
+                        .csrf(AbstractHttpConfigurer::disable)
+                        .build();
+
                 )
                 .formLogin(Customizer.withDefaults());
 
-        return http.build();
+        return http.build();*/
     }
 }
