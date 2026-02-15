@@ -35,9 +35,10 @@ public class SecurityConfig {
                         )
                 )
                 .authorizeHttpRequests(auth->auth
-                        .requestMatchers("/public/login").permitAll()
+                        .requestMatchers("/public/**").permitAll()
                         .requestMatchers("/admin/**").hasRole("ADMIN")
                         .anyRequest().authenticated()
+                        //.anyRequest().permitAll()
                 );
 
         http.addFilterBefore(

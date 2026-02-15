@@ -9,7 +9,7 @@ import java.util.Date;
 @Component
 public class JwtUtil {
 
-    private String SECRET = "mysecretkey" ;         // must to be hardcoded
+    private String SECRET = "mySuperSecretKeyForJwtTokenGenerationWhichIsAtLeast32BytesLong" ;   // must to be hardcoded
 
     public String generateToken(String username){
         return Jwts.builder()

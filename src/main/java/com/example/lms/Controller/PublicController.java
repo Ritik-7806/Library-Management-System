@@ -22,8 +22,8 @@ public class PublicController {
 
     @PostMapping("login")
     public ResponseEntity<String> login(@RequestBody LoginRequest loginRequest){
-        userService.login(loginRequest) ;
-        return ResponseEntity.status(HttpStatus.CREATED).body("User login Successfully") ;
+        //userService.login(loginRequest) ;
+        return ResponseEntity.status(HttpStatus.CREATED).body(userService.login(loginRequest) ) ;
     }
 
     @GetMapping("logout")

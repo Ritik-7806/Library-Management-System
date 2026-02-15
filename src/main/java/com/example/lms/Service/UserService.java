@@ -10,6 +10,7 @@ import com.example.lms.Repository.UserRepository;
 import org.apache.tomcat.util.net.openssl.ciphers.Authentication;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -58,13 +59,17 @@ public class UserService {
     }
 
     public String login(LoginRequest cur){
-        authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(
-                        cur.getUsername(),
-                        cur.getPassword()
-                )
-        ) ;
-        return jwtUtil.generateToken(cur.getUsername());
+        try {
+            authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(
+                            cur.getUsername(),
+                            cur.getPassword()
+                    )
+            );
+            return jwtUtil.generateToken(cur.getUsername());
+        }catch(BadCredentialsException e){
+            throw new RuntimeException("invalid credentials") ;
+        }
         /*User user = userRepository.findByUsername(cur.getUsername()) ;
         if(user == null) throw new RuntimeException("user not found") ;
         if(!passwordEncoder.matches(cur.getPassword(), user.getPassword()))throw new RuntimeException("invalid password") ;
