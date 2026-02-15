@@ -15,7 +15,7 @@ public class LibraryManagementSystemApplication {
 
 	@Bean
 	public PasswordEncoder passwordEncoder(){
-		return new BCryptPasswordEncoder() ;
+		return new BCryptPasswordEncoder();
 	}
 
 }
