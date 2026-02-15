@@ -1,12 +1,16 @@
 package com.example.lms.Service;
 
+import com.example.lms.Config.JwtUtil;
 import com.example.lms.DTO.LoginRequest;
 import com.example.lms.DTO.UpdateUser;
 import com.example.lms.Entity.Book;
 import com.example.lms.Entity.User;
 import com.example.lms.Repository.BookRepository;
 import com.example.lms.Repository.UserRepository;
+import org.apache.tomcat.util.net.openssl.ciphers.Authentication;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -18,6 +22,12 @@ public class UserService {
 
     @Autowired
     private UserRepository userRepository ;
+
+    @Autowired
+    private JwtUtil jwtUtil ;
+
+    @Autowired
+    AuthenticationManager authenticationManager ;
 
     @Autowired
     private BookRepository bookRepository ;
@@ -47,13 +57,21 @@ public class UserService {
         user.setPassword(passwordEncoder.encode(cur.getNewPassword()));
     }
 
-    public void login(LoginRequest cur){
-        User user = userRepository.findByUsername(cur.getUsername()) ;
+    public String login(LoginRequest cur){
+        authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(
+                        cur.getUsername(),
+                        cur.getPassword()
+                )
+        ) ;
+        return jwtUtil.generateToken(cur.getUsername());
+        /*User user = userRepository.findByUsername(cur.getUsername()) ;
         if(user == null) throw new RuntimeException("user not found") ;
         if(!passwordEncoder.matches(cur.getPassword(), user.getPassword()))throw new RuntimeException("invalid password") ;
 
         /// user verified successfully
         return ;
+         */
     }
 
 
