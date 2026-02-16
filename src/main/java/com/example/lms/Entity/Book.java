@@ -13,8 +13,6 @@ public class Book {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)  // <-- auto-increment
     private long id;
-    @NotNull
     private String name ;
-    @NotNull
     private String author ;
 }

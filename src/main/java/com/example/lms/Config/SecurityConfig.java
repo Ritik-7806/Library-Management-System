@@ -35,10 +35,11 @@ public class SecurityConfig {
                         )
                 )
                 .authorizeHttpRequests(auth->auth
-                        .requestMatchers("/public/**").permitAll()
+                        .requestMatchers("/**","/public/**","/v3/api-docs/**",
+                                "/swagger-ui/**",
+                                "/swagger-ui.html").permitAll()
                         .requestMatchers("/admin/**").hasRole("ADMIN")
                         .anyRequest().authenticated()
-                        //.anyRequest().permitAll()
                 );
 
         http.addFilterBefore(
