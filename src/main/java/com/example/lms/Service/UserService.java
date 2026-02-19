@@ -82,6 +82,7 @@ public class UserService {
 
     public void deleteUser(String username){
         User cur = userRepository.findByUsername(username) ;
+
         userRepository.delete(cur);
     }
 
