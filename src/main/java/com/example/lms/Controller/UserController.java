@@ -28,7 +28,7 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.ACCEPTED).body("User updated successfully") ;
     }
 
-    @DeleteMapping("delete")
+    @PostMapping("delete")
     public ResponseEntity<String> deleteUser(@RequestBody String username){
         userService.deleteUser(username) ;
         return ResponseEntity.ok("User have been deleted successfully") ;
