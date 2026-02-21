@@ -33,7 +33,7 @@ pipeline {
 
         stage('Success') {
             steps {
-                echo '🎉 Application deployed successfully!'
+                echo ' Application deployed successfully!'
             }
         }
 
