@@ -6,7 +6,7 @@ pipeline {
     }
 
     environment {
-        APP_NAME = "lms-backend"
+        APP_NAME = "lms"
         IMAGE_NAME = "${APP_NAME}:latest"
     }
 
