@@ -16,7 +16,7 @@ public class HealthCheckController {
         <p>All the APIs and available endpoints can be accessed and tested via <b>Swagger UI</b>.</p>
 
         <p>
-        <a href="http://localhost:8081/swagger-ui/index.html">
+        <a href="http://localhost:9090/swagger-ui/index.html">
         Open Swagger UI
         </a>
         </p>
