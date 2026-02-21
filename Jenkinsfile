@@ -30,5 +30,12 @@ pipeline {
                 sh 'docker-compose up -d --build'
             }
         }
+
+        stage('Success') {
+            steps {
+                echo '🎉 Application deployed successfully!'
+            }
+        }
+
     }
 }
