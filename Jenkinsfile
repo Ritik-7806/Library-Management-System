@@ -58,10 +58,10 @@ pipeline {
             }
         }
 
-        stage('Check Pods') {
+        stage('Start The Application') {
             steps {
                 sh """
-                kubectl get pods -n lms
+                kubectl port-forward -n ingress-nginx svc/ingress-nginx-controller 9090:80
                 """
             }
         }
