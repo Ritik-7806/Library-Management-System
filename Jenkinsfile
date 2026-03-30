@@ -58,13 +58,6 @@ pipeline {
             }
         }
 
-        stage('Start The Application') {
-            steps {
-                withCredentials([file(credentialsId: 'kind-kubeconfig', variable: 'KUBECONFIG')]) {
-                    sh 'nohup kubectl port-forward -n ingress-nginx svc/ingress-nginx-controller 9090:80 >/dev/null 2>&1 &'
-
-                }
-            }
-        }
+        
     }
 }
