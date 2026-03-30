@@ -53,7 +53,7 @@ pipeline {
         stage('Restart Deployment') {
             steps {
                 sh """
-                kubectl rollout deployment lms-backend -n lms
+                kubectl rollout restart deployment lms-backend -n lms
                 """
             }
         }
