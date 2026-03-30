@@ -30,7 +30,7 @@ pipeline {
         stage('Push Image on DockerHub') {
             steps {
                 sh """
-                docker push ${IMAGE_NAME}:latest
+                docker push ${IMAGE_NAME}
                 """
             }
         }
