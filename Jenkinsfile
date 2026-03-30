@@ -29,18 +29,18 @@ pipeline {
         }
 
         stage('Docker Login') {
-    steps {
-        withCredentials([usernamePassword(
-            credentialsId: 'dockerhub-creds',
-            usernameVariable: 'USER',
-            passwordVariable: 'PASS'
-        )]) {
-            sh """
-            echo \$PASS | docker login -u \$USER --password-stdin
-            """
+            steps {
+                withCredentials([usernamePassword(
+                    credentialsId: 'dockerhub-creds',
+                    usernameVariable: 'USER',
+                    passwordVariable: 'PASS'
+                )]) {
+                        sh """
+                        echo \$PASS | docker login -u \$USER --password-stdin
+                        """
+                    }
+            }
         }
-    }
-}
 
         stage('Push Image on DockerHub') {
             steps {
@@ -62,9 +62,8 @@ pipeline {
             steps {
                 withCredentials([file(credentialsId: 'kind-kubeconfig', variable: 'KUBECONFIG')]) {
                     sh 'nohup kubectl port-forward -n ingress-nginx svc/ingress-nginx-controller 9090:80 > port-forward.log 2>&1 &'
-
+                }
             }
         }
-
     }
 }
