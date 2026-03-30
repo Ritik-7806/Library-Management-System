@@ -52,9 +52,9 @@ pipeline {
 
         stage('Restart Deployment') {
             steps {
-                sh """
-                kubectl rollout restart deployment lms-backend -n lms
-                """
+                withCredentials([file(credentialsId: 'kind-kubeconfig', variable: 'KUBECONFIG')]) {
+                sh 'kubectl rollout restart deployment lms-backend -n lms'
+                }
             }
         }
 
