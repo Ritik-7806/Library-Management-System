@@ -6,31 +6,50 @@ pipeline {
     }
 
     environment {
-        APP_NAME = "lms-backend"
+        APP_NAME = "ritik7806/lms-backend"
         IMAGE_NAME = "${APP_NAME}:latest"
     }
 
     stages {
-        stage('Clone') {
+
+        stage('Clone Repository') {
             steps {
-                git branch: 'deploy',
+                git branch: 'test',
                     url: 'https://github.com/Ritik-7806/Library-Management-System.git'
             }
         }
 
         stage('Build Docker Image') {
             steps {
-                script {
-                    docker.build("${IMAGE_NAME}")
-                }
+                sh """
+                docker build -t ${IMAGE_NAME} .
+                """
             }
         }
 
-        stage('Deploy') {
+        stage('Push Image on DockerHub') {
             steps {
-                sh 'docker-compose down || true'
-                sh 'docker-compose up -d --build'
+                sh """
+                docker push ${IMAGE_NAME}:latest
+                """
             }
         }
+
+        stage('Restart Deployment') {
+            steps {
+                sh """
+                kubectl rollout deployment lms-backend -n lms
+                """
+            }
+        }
+
+        stage('Check Pods') {
+            steps {
+                sh """
+                kubectl get pods -n lms
+                """
+            }
+        }
+
     }
 }
