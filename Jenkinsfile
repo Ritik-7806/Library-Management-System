@@ -30,6 +30,7 @@ pipeline {
         stage('Push Image on DockerHub') {
             steps {
                 sh """
+                docker login
                 docker push ${IMAGE_NAME}
                 """
             }
