@@ -8,8 +8,7 @@ pipeline {
     environment {
         APP_NAME = "ritik7806/lms-backend"
         IMAGE_NAME = "${APP_NAME}:latest"
-        DOCKER_USER = "ritik7806"
-        DOCKER_PASS = "password"
+        
     }
 
     stages {
@@ -29,10 +28,23 @@ pipeline {
             }
         }
 
+        stage('Docker Login') {
+    steps {
+        withCredentials([usernamePassword(
+            credentialsId: 'dockerhub-creds',
+            usernameVariable: 'USER',
+            passwordVariable: 'PASS'
+        )]) {
+            sh """
+            docker login -u \$USER --password-stdin
+            """
+        }
+    }
+}
+
         stage('Push Image on DockerHub') {
             steps {
                 sh """
-                docker login -u "$DOCKER_USER" --password-stdin
                 docker push ${IMAGE_NAME}
                 """
             }
