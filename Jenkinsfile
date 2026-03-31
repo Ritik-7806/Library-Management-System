@@ -58,6 +58,12 @@ pipeline {
             }
         }
 
+        stage('Start The Application') {
+            steps {
+                echo "Application iS started ......"
+            }
+        }
+
         
     }
 }
