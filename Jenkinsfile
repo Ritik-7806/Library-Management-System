@@ -6,36 +6,58 @@ pipeline {
     }
 
     environment {
-        APP_NAME = "lms"
+        APP_NAME = "ritik7806/lms-backend"
         IMAGE_NAME = "${APP_NAME}:latest"
+        
     }
 
     stages {
-        stage('Clone') {
+
+        stage('Clone Repository') {
             steps {
-                git branch: 'deploy',
+                git branch: 'test',
                     url: 'https://github.com/Ritik-7806/Library-Management-System.git'
             }
         }
 
         stage('Build Docker Image') {
             steps {
-                bat 'docker build -t %IMAGE_NAME% .'
+                sh """
+                docker build -t ${IMAGE_NAME} .
+                """
             }
         }
 
-        stage('Deploy') {
+        stage('Docker Login') {
             steps {
-                sh 'docker-compose down || true'
-                sh 'docker-compose up -d --build'
+                withCredentials([usernamePassword(
+                    credentialsId: 'dockerhub-creds',
+                    usernameVariable: 'USER',
+                    passwordVariable: 'PASS'
+                )]) {
+                        sh """
+                        echo \$PASS | docker login -u \$USER --password-stdin
+                        """
+                    }
             }
         }
 
-        stage('Success') {
+        stage('Push Image on DockerHub') {
             steps {
-                echo ' Application deployed successfully!'
+                sh """
+                docker push ${IMAGE_NAME}
+                """
             }
         }
 
+        stage('Restart Deployment') {
+            steps {
+                withCredentials([file(credentialsId: 'kind-kubeconfig', variable: 'KUBECONFIG')]) {
+                sh 'kubectl rollout restart deployment lms-backend -n lms'
+                }
+            }
+        }
+
+        
     }
 }
